@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  build:
+    commands:
+      - echo Build Starting on `date`
+      - cd DeployServer
+      - chmod +x ./gradlew
+      - ./gradlew build
+  post_build:
+    commands:
+      - echo $(basename ./code-deploy-test/build/libs/*.jar)
+artifacts:
+  files:
+    - code-deploy-test/build/libs/*.jar
+    - code-deploy-test/scripts/**
+    - code-deploy-test/appspec.yml
+  discard-paths: yes
